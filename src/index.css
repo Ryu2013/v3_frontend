@@ -1,0 +1,70 @@
+:root {
+  --primary-color: #673ab7; /* Deep Purple */
+  --primary-light: #d1c4e9;
+  --text-color: #333;
+  --border-color: #e0e0e0;
+  --bg-color: #f9f9f9;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+.shift-management-config {
+  padding: 20px;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+/* FullCalendar Overrides for Google Sheets look */
+.fc {
+  background: white;
+  border: 1px solid var(--border-color);
+  font-family: inherit;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+  border: 1px solid var(--border-color);
+}
+
+.fc-col-header-cell {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 0;
+  font-weight: normal;
+}
+
+.fc-daygrid-day-number {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.fc-align-middle {
+    vertical-align: middle;
+}
+
+/* Event Styling */
+.fc-event {
+  background-color: var(--primary-light);
+  border: none;
+  border-radius: 4px;
+  color: var(--primary-color);
+  font-size: 0.85em;
+  padding: 2px 4px;
+  margin: 1px 0;
+  cursor: grab;
+}
+
+.fc-event:hover {
+  filter: brightness(0.95);
+}
+
+.fc-day-today {
+  background-color: #f3e5f5 !important; /* Very light purple for today */
+}
