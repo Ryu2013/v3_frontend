@@ -1,0 +1,40 @@
+# .github/workflows/deploy.yml
+name: フロントエンドをS3へデプロイ（OIDC）
+
+on:
+  push:
+    branches:
+      - main  # ←（必要なら変更）デプロイを走らせたいブランチ名
+
+permissions:
+  id-token: write   # ← OIDCで必須
+  contents: read    # ← checkoutで必須
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Node.jsをセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # ←（必要なら変更）使いたいNodeのメジャーバージョン
+          cache: "npm"
+
+      - name: 依存関係をインストール
+        run: npm ci
+
+      - name: ビルド
+        run: npm run build
+
+      - name: AWS認証（OIDCでIAMロールを引き受ける）
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::079760567374:role/v3_front_AR
+          aws-region: ap-northeast-1 # ←（必要なら変更）リージョン
+
+      - name: S3へ同期（古いファイルは削除）
+        run: aws s3 sync dist/ s3://task-app-s3-ryuuiti/ --delete  # ←（必要なら変更）S3バケット名
